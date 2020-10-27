@@ -10,6 +10,7 @@ import * as admin from 'firebase-admin';
 
 export class FirebaseAuthStrategy extends Strategy {
   readonly name = FIREBASE_AUTH;
+  private checkRevoked = false;
 
   constructor(
     options: FirebaseAuthStrategyOptions,
@@ -23,6 +24,7 @@ export class FirebaseAuthStrategy extends Strategy {
     }
 
     this.extractor = options.extractor;
+    this.checkRevoked = options.checkRevoked;
   }
 
   async validate(payload: FirebaseUser): Promise<any> {
@@ -40,7 +42,7 @@ export class FirebaseAuthStrategy extends Strategy {
 
     try {
       admin.auth()
-        .verifyIdToken(idToken)
+        .verifyIdToken(idToken, this.checkRevoked)
         .then((res) => this.validateDecodedIdToken(res))
         .catch((err) => {
           this.fail({ err }, 401);
