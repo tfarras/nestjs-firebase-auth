@@ -9,7 +9,7 @@
 
 ## Code Style
 
-We use [Prettier](https://prettier.io/) and tslint to maintain code style and best practices.
+We use [Prettier](https://prettier.io/) and eslint to maintain code style and best practices.
 Please make sure your PR adheres to the guides by running:
 
 ```bash
