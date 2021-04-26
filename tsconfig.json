@@ -5,13 +5,11 @@
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es6",
-    "sourceMap": false,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2017",
+    "sourceMap": true,
     "outDir": "./dist",
-    "rootDir": "./src",
     "baseUrl": "./",
-    "noLib": false
-  },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules"]
+    "incremental": true
+  }
 }
