@@ -32,26 +32,19 @@ export class FirebaseAuthStrategy extends Strategy {
     return payload;
   }
 
-  authenticate(req: Request): void {
+  async authenticate(req: Request): Promise<void> {
     const idToken = this.extractor(req);
 
     if (!idToken) {
       this.fail(UNAUTHORIZED, 401);
-
       return;
     }
 
     try {
-      admin
-        .auth()
-        .verifyIdToken(idToken, this.checkRevoked)
-        .then((res) => this.validateDecodedIdToken(res))
-        .catch((err) => {
-          this.fail({ err }, 401);
-        });
+      const decodedIdToken = await admin.auth().verifyIdToken(idToken, this.checkRevoked);
+      await this.validateDecodedIdToken(decodedIdToken);
     } catch (e) {
       this.logger.error(e);
-
       this.fail(e, 401);
     }
   }
